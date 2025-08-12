@@ -20,6 +20,16 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
+    devDependencies:
+      better-node-test:
+        specifier: ^0.7.1
+        version: 0.7.1
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      remark:
+        specifier: ^15.0.1
+        version: 15.0.1
 
 packages:
 
@@ -128,6 +138,11 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  better-node-test@0.7.1:
+    resolution: {integrity: sha512-reijKcA8jO9qlmnYMu2EerjYgltEiatqa5V5+gxY71FHKZPZduJv4Mc0xMj1l9E4kiuCAM6SBS/IPdKksWtcrw==}
+    engines: {node: ^18.19.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -469,6 +484,11 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   proc-log@4.2.0:
     resolution: {integrity: sha512-g8+OnU/L2v+wyiVK+D5fA34J7EH8jZ8DDlvwhRCMxmMj7UCBvxiO1mGeN+36JXIKF4zevU4kRBd8lVgG9vLelA==}
@@ -820,6 +840,8 @@ snapshots:
   bail@2.0.2: {}
 
   balanced-match@1.0.2: {}
+
+  better-node-test@0.7.1: {}
 
   binary-extensions@2.3.0: {}
 
@@ -1241,6 +1263,8 @@ snapshots:
   picocolors@1.1.1: {}
 
   picomatch@2.3.1: {}
+
+  prettier@3.6.2: {}
 
   proc-log@4.2.0: {}
 

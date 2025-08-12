@@ -5,7 +5,7 @@
   "description": "remar-lint rule that checks Markdown documents to ensure specified words appear with the correct casing.",
   "main": "index.js",
   "scripts": {
-    "lint": "remark doc.md"
+    "test": "bnt"
   },
   "keywords": [
     "remark",
@@ -26,5 +26,17 @@
     "remark-lint": "^10.0.1",
     "unified-lint-rule": "^3.0.1",
     "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "better-node-test": "^0.7.1",
+    "prettier": "^3.6.2",
+    "remark": "^15.0.1"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "trailingComma": "all",
+    "printWidth": 80,
+    "tabWidth": 2,
+    "semi": true
   }
 }
