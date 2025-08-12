@@ -1,0 +1,30 @@
+{
+  "name": "remark-lint-word-case",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "remar-lint rule that checks Markdown documents to ensure specified words appear with the correct casing.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "remark doc.md"
+  },
+  "keywords": [
+    "remark",
+    "remark-lint",
+    "remark-lint-rule",
+    "remark-plugin",
+    "markdown",
+    "lint",
+    "word-case",
+    "word-casing",
+    "capitalization"
+  ],
+  "author": "Marco Bulgarelli",
+  "license": "ISC",
+  "packageManager": "pnpm@10.14.0",
+  "dependencies": {
+    "remark-cli": "^12.0.1",
+    "remark-lint": "^10.0.1",
+    "unified-lint-rule": "^3.0.1",
+    "unist-util-visit": "^5.0.0"
+  }
+}
