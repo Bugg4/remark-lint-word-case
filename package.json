@@ -3,8 +3,11 @@
   "type": "module",
   "version": "1.0.0",
   "description": "remar-lint rule that checks Markdown documents to ensure specified words appear with the correct casing.",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
   "scripts": {
+    "build": "bun build src/*.ts --outdir dist --target node --sourcemap && tsc --emitDeclarationOnly",
     "test": "bnt"
   },
   "keywords": [
@@ -28,7 +31,9 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "better-node-test": "^0.7.1",
+    "@types/bun": "^1.2.20",
+    "@types/unist": "^3.0.3",
+    "@types/vfile": "^4.0.0",
     "prettier": "^3.6.2",
     "remark": "^15.0.1",
     "vfile": "^6.0.3"
@@ -39,5 +44,9 @@
     "printWidth": 80,
     "tabWidth": 2,
     "semi": true
+  },
+  "private": true,
+  "peerDependencies": {
+    "typescript": "^5"
   }
 }

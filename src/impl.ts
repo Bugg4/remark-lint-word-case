@@ -1,4 +1,4 @@
-import remarkLintWordCase from "../index.js";
+import remarkLintWordCase from "./index.ts"
 import assert from "node:assert/strict";
 import test from "node:test";
 import { remark } from "remark";
