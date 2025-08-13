@@ -30,6 +30,9 @@ importers:
       remark:
         specifier: ^15.0.1
         version: 15.0.1
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
 
 packages:
 

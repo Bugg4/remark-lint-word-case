@@ -8,12 +8,14 @@ import path from "path";
 const invalidFilePath = path.join(import.meta.dirname, "invalid.md");
 const invalidFileContent = fs.readFileSync(invalidFilePath, "utf-8");
 
-test("[A] first test", async () => {
-  const result = await remark()
-    .use(remarkLintWordCase, {
-      words: ["RegEx", "fooBAR"],
-    })
-    .process(invalidFileContent);
-  // assert.strictEqual(result.messages.length, 1)
-  console.log(result)
-});
+const result = await remark()
+  .use(remarkLintWordCase, {
+    words: ["RegEx", "fooBAR"],
+  })
+  .process(invalidFileContent);
+// assert.strictEqual(result.messages.length, 1)
+if (result.messages.length > 0) {
+  result.messages.forEach((msg) => {
+    console.log(msg);
+  });
+}

@@ -3,30 +3,31 @@ import { match } from "node:assert";
 import { text } from "node:stream/consumers";
 import { lintRule } from "unified-lint-rule";
 import { visit } from "unist-util-visit";
+import { VFile } from "vfile";
 
-function fixNode(node, file, options) {
+function fixText(text, options) {
   // correct casings
   const user_word_list = options.words;
-
-  //console.log(user_word_list);
-
-  // create pattern to match all words in the list with any casing
-  // regex to match a list words, case insenstive, allow adjacent punctuation before and after:
   const pattern = new RegExp(`\\b(${user_word_list.join("|")})\\b`, "gi");
 
-  const matches = node.value.match(pattern);
+  const matches = text.match(pattern);
+
+  let correctedText = text;
 
   if (matches) {
     matches.forEach((match) => {
-      node.actual = match;
-      node.expected = user_word_list.find(
-        (word) => word.toLowerCase() === match.toLowerCase(),
+      // substitute matched incrrect word with user words specified in word list
+
+      correctedText.replace(
+        match,
+        user_word_list.find(
+          (word) => word.toLowerCase() === match.toLowerCase(),
+        ),
       );
-      node.file = file;
-      
-      file.message("Wrong word case", node);
     });
+    return correctedText;
   }
+  return;
 
   //let results = [];
 
@@ -49,7 +50,18 @@ function fixNode(node, file, options) {
   return results; */
 }
 
-function wordCaseRule(tree, file, options = {}) {
+/*
+Siccome voglio fare uscire un messaggio per ogni errore
+l'apporrcio corrente non va bene perché portei avere più
+parole sbagliate nello stesso text node.
+
+quindi fixNode deve ritornare tutto il nodo corretto.
+poi in wordCaseRule, confronto nodo corretto con quello sorgente:
+  Per ogni differenza, genero un messaggio con file.message
+
+*/
+
+function wordCaseRule(tree, file, options) {
   // check options are valid
   if (!options) {
     file.message("The `words` option is required.", options);
@@ -69,16 +81,22 @@ function wordCaseRule(tree, file, options = {}) {
   // https://github.com/syntax-tree/mdast?tab=readme-ov-file#nodes
   // blockquote break code definition emphasis heading html image imageReference inlineCode link linkReference list listItem paragraph root strong text thematicBreak
   visit(tree, "text", (node) => {
-    // console.log(node);
-    const corrections = fixNode(node, file, options);
+    const correctedText = fixText(node.value, options);
 
-    if (!corrections || corrections.length === 0) {
+    if (!correctedText) {
       return;
     }
 
-    corrections.forEach((corr) => {
-      file.message("Incorrect word case", node);
-    });
+    //let message =
+
+    //file.messages.push()
+
+    const msg = file.message(
+      `Found "${node.value}" expected "${correctedText}"`,
+      node,
+    );
+    msg.actual = node.value;
+    msg.expected = correctedText;
   });
 }
 

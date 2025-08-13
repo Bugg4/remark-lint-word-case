@@ -30,7 +30,8 @@
   "devDependencies": {
     "better-node-test": "^0.7.1",
     "prettier": "^3.6.2",
-    "remark": "^15.0.1"
+    "remark": "^15.0.1",
+    "vfile": "^6.0.3"
   },
   "prettier": {
     "singleQuote": false,
