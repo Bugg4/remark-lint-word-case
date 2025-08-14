@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-word-case",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "remark-lint rule that checks Markdown documents to ensure specified words appear with the correct casing.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,7 +11,8 @@
   "scripts": {
     "build": "run-p -n -l build:*",
     "build:transpile": "bun build src/*.ts --outdir dist --target node --sourcemap --packages=external",
-    "build:type-declarations": "tsc src/*.ts --declaration --emitDeclarationOnly --outDir dist && echo 'done'",
+    "build:types": "tsc && echo 'done'",
+    "prepublishOnly": "bun run build",
     "test": "bun test"
   },
   "keywords": [
@@ -33,6 +34,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "typescript": "^5",
     "@types/bun": "^1.2.20",
     "@types/unist": "^3.0.3",
     "@types/vfile": "^4.0.0",
@@ -47,8 +49,5 @@
     "tabWidth": 2,
     "semi": true
   },
-  "private": true,
-  "peerDependencies": {
-    "typescript": "^5"
-  }
+  "private": false
 }
