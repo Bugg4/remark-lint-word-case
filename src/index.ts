@@ -1,6 +1,6 @@
 import { lintRule } from "unified-lint-rule";
 import { visit } from "unist-util-visit";
-import { VFile } from "vfile";
+import type { VFile } from "vfile";
 import type { Node } from "unist";
 
 type NonEmptyArray<T> = [T, ...T[]];
@@ -68,7 +68,6 @@ function wordCaseRule(
   file: VFile,
   options: remarkLintWordCaseOptions,
 ) {
-
   visit(tree, "text", (node: TextNode) => {
     const correctedText = fixText(node.value, options);
 
@@ -77,7 +76,7 @@ function wordCaseRule(
     }
 
     const msg = file.message(
-      `Found "${node.value}" expected "${correctedText}"`,
+      `Word case error. Expected \`${correctedText.trim()}\` found \`${correctedText.trim()}\``,
       node,
     );
     msg.actual = node.value;
