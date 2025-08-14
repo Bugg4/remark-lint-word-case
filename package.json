@@ -2,16 +2,23 @@
   "name": "remark-lint-word-case",
   "type": "module",
   "version": "1.0.0",
-  "description": "remar-lint rule that checks Markdown documents to ensure specified words appear with the correct casing.",
-  "main": "index.js",
+  "description": "remark-lint rule that checks Markdown documents to ensure specified words appear with the correct casing.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "lint": "remark doc.md"
+    "build": "run-p -n -l build:*",
+    "build:transpile":"bun build src/*.ts --outdir dist --target node --sourcemap --packages=external",
+    "build:type-declarations":"tsc src/*.ts --declaration --emitDeclarationOnly --outDir dist && echo 'done'",
+    "test": "bun test"
   },
   "keywords": [
     "remark",
+    "remark-plugin",
     "remark-lint",
     "remark-lint-rule",
-    "remark-plugin",
     "markdown",
     "lint",
     "word-case",
@@ -20,11 +27,31 @@
   ],
   "author": "Marco Bulgarelli",
   "license": "ISC",
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "bun@1.2.20",
   "dependencies": {
     "remark-cli": "^12.0.1",
     "remark-lint": "^10.0.1",
     "unified-lint-rule": "^3.0.1",
     "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.20",
+    "@types/unist": "^3.0.3",
+    "@types/vfile": "^4.0.0",
+    "npm-run-all2": "^8.0.4",
+    "prettier": "^3.6.2",
+    "remark": "^15.0.1",
+    "vfile": "^6.0.3"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "trailingComma": "all",
+    "printWidth": 80,
+    "tabWidth": 2,
+    "semi": true
+  },
+  "private": true,
+  "peerDependencies": {
+    "typescript": "^5"
   }
 }
