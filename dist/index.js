@@ -36,7 +36,7 @@ function wordCaseRule(tree, file, options) {
     if (!correctedText || correctedText === node.value) {
       return;
     }
-    const msg = file.message(`Found "${node.value}" expected "${correctedText}"`, node);
+    const msg = file.message(`Word case error. Expected \`${correctedText.trim()}\` found \`${correctedText.trim()}\``, node);
     msg.actual = node.value;
     msg.expected = [correctedText];
   });
@@ -48,5 +48,5 @@ export {
   src_default as default
 };
 
-//# debugId=1317F3DE6B11E29F64756E2164756E21
+//# debugId=795A60F76A4B76D964756E2164756E21
 //# sourceMappingURL=index.js.map
