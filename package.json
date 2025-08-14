@@ -1,7 +1,7 @@
 {
   "name": "remark-lint-word-case",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "remark-lint rule that checks Markdown documents to ensure specified words appear with the correct casing.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "build": "run-p -n -l build:*",
-    "build:transpile":"bun build src/*.ts --outdir dist --target node --sourcemap --packages=external",
-    "build:type-declarations":"tsc src/*.ts --declaration --emitDeclarationOnly --outDir dist && echo 'done'",
+    "build:transpile": "bun build src/*.ts --outdir dist --target node --sourcemap --packages=external",
+    "build:type-declarations": "tsc src/*.ts --declaration --emitDeclarationOnly --outDir dist && echo 'done'",
     "test": "bun test"
   },
   "keywords": [
@@ -29,8 +29,6 @@
   "license": "ISC",
   "packageManager": "bun@1.2.20",
   "dependencies": {
-    "remark-cli": "^12.0.1",
-    "remark-lint": "^10.0.1",
     "unified-lint-rule": "^3.0.1",
     "unist-util-visit": "^5.0.0"
   },
@@ -40,8 +38,7 @@
     "@types/vfile": "^4.0.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.6.2",
-    "remark": "^15.0.1",
-    "vfile": "^6.0.3"
+    "remark": "^15.0.1"
   },
   "prettier": {
     "singleQuote": false,
