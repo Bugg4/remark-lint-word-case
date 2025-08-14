@@ -76,7 +76,7 @@ function wordCaseRule(
     }
 
     const msg = file.message(
-      `Found "${node.value}" expected "${correctedText}"`,
+      `Word case error. Expected \`${correctedText.trim()}\` found \`${correctedText.trim()}\``,
       node,
     );
     msg.actual = node.value;
