@@ -105,10 +105,10 @@ function wordCaseRule(
       const wordEndOffset = wordStartOffset + res.actual.length;
 
       // Convert offsets to {line, column} points
-      const start = loc.toPoint(wordStartOffset)
-      const end = loc.toPoint(wordEndOffset)
+      const start = loc.toPoint(wordStartOffset);
+      const end = loc.toPoint(wordEndOffset);
 
-      if (!start || !end){
+      if (!start || !end) {
         throw new Error("undefined start or end point");
       }
 
