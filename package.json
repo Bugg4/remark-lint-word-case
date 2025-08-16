@@ -34,6 +34,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "typescript": "^5",
     "@types/bun": "^1.2.20",
     "@types/unist": "^3.0.3",
     "@types/vfile": "^4.0.0",
