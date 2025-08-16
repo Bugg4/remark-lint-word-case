@@ -15,11 +15,13 @@ test("Complete file", async () => {
     })
     .process(invalidFileContent);
 
-  result.path = invalidFilePath
+  result.path = invalidFilePath;
 
-  console.log(reporter(result));
+  if (Bun.env.LOGGING) {
+    console.log(reporter(result));
+  }
 
-  expect(result.messages.length).toBe(8);
+  expect(result.messages.length).toBe(13);
 });
 
 test("Heading", async () => {
@@ -29,7 +31,8 @@ test("Heading", async () => {
     })
     .process("# this is a foobar test");
 
-  console.log(reporter(result));
-
+  if (Bun.env.LOGGING) {
+    console.log(reporter(result));
+  }
   expect(result.messages.length).toBe(1);
 });

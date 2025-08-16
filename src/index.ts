@@ -2,7 +2,6 @@ import { lintRule } from "unified-lint-rule";
 import { visit } from "unist-util-visit";
 import { VFile } from "vfile";
 import type { Literal, Node, Position } from "unist";
-import type { Rule } from "unified-lint-rule";
 import type { VFileMessage } from "vfile-message";
 import { location } from "vfile-location";
 
