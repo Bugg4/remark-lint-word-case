@@ -66,4 +66,6 @@ export {
   remarkLintWordCaseError,
   src_default as default
 };
+
 //# debugId=5EC409693B1B5FA064756E2164756E21
+//# sourceMappingURL=index.js.map
