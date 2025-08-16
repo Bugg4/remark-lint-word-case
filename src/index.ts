@@ -1,11 +1,10 @@
 import { lintRule } from "unified-lint-rule";
 import { visit } from "unist-util-visit";
 import { VFile } from "vfile";
-import type { Literal, Node, Position, Point } from "unist";
+import type { Literal, Node, Position } from "unist";
 import type { Rule } from "unified-lint-rule";
 import type { VFileMessage } from "vfile-message";
 import { location } from "vfile-location";
-import type { Location } from "vfile-location";
 
 type NonEmptyArray<T> = [T, ...T[]];
 
@@ -22,69 +21,63 @@ export enum remarkLintWordCaseError {
 interface TextNode extends Literal {
   type: "text";
   value: string;
+  // A TextNode has a position if it's generated from a source file
+  position?: Position;
 }
 
-type lintResult = {
-  expected: string; // expecyed text value
-  actual: string; // actual text value
-  place: Position | Point
+// This result now includes the index within the node's value string
+type LintResult = {
+  expected: string;
+  actual: string;
+  index: number; // The starting index of the 'actual' word within the node's text
 };
 
-function calcWordPosition(
-  node: TextNode,
-  word: string,
-  index: number, // start index of the matched word relative to the beginning of THIS node
-): Position {
-  // todo
-}
-
+/**
+ * Lints a single text node and returns a result for each incorrect word found.
+ */
 function lintText(
   node: TextNode,
   options: remarkLintWordCaseOptions,
-): lintResult[] {
-  // linting one text node may return more than one error, so we collect them all and return them in block
+): LintResult[] {
+  const results: LintResult[] = [];
+  const { words } = options;
+  const pattern = new RegExp(`\\b(${words.join("|")})\\b`, "gi");
 
-  let results: lintResult[] = [];
+  let match;
+  // Use `exec` in a loop to get the index of each match
+  while ((match = pattern.exec(node.value)) !== null) {
+    const actual = match[0]; // The matched word (e.g., "javascript")
 
-  const user_word_list = options.words;
-  const pattern = new RegExp(`\\b(${user_word_list.join("|")})\\b`, "gi"); // match globally, case insenstive
+    // Find the correctly-cased version from the user's list
+    const expected = words.find(
+      (word) => word.toLowerCase() === actual.toLowerCase(),
+    );
 
-  const matches = node.value.match(pattern);
-
-  // NOTE:
-  // In matches we could have duplicate words but at different positions in the node 
-
-  if (matches) {
-    let replacement: string | undefined;
-
-    matches.forEach((match) => {
-      replacement = user_word_list.find(
-        (word) => word.toLowerCase() === match.toLowerCase(),
-      );
-      if (replacement) {
-        // build a result, and push it to results array.
-        results.push({
-          expected: replacement.trim(),
-          actual: match.trim(),
-          position: // todo
-        });
-      }
-    });
+    // Only report an error if the casing is actually wrong
+    if (expected && expected !== actual) {
+      results.push({
+        expected,
+        actual,
+        index: match.index, // The starting position of the match in `node.value`
+      });
+    }
   }
 
   return results;
 }
 
+/**
+ * The main linting rule function.
+ */
 function wordCaseRule(
   tree: Node,
   file: VFile,
   options: remarkLintWordCaseOptions,
 ) {
-  // check options at runtime
+  // --- Option validation ---
   if (!options) {
     throw new Error(remarkLintWordCaseError.OPTIONS_UNDEFINED);
   }
-
   if (
     !Array.isArray(options.words) ||
     options.words.length === 0 ||
@@ -92,20 +85,47 @@ function wordCaseRule(
   ) {
     throw new Error(remarkLintWordCaseError.OPTIONS_INVALID);
   }
+  // --- End validation ---
 
-  // visit AST nodes
+  const loc = location(file); // Create a location service for the file
+
   visit(tree, "text", (node: TextNode) => {
+    // A node might not have a position if it was created programmatically
+    if (!node.position || !node.position.start.offset) {
+      return;
+    }
+    const nodeStartOffset = node.position.start.offset;
+
     const results = lintText(node, options);
 
+    // For each incorrect word found, calculate its precise position and create a message
     results.forEach((res) => {
-      let msg: VFileMessage = file.message(
-        `Word case error. Expected \`${res.expected}\` found \`${res.actual}\``,
-        node,
+      // Calculate the word's absolute start and end offsets in the file
+      const wordStartOffset = nodeStartOffset + res.index;
+      const wordEndOffset = wordStartOffset + res.actual.length;
+
+      // Convert offsets to {line, column} points
+      const start = loc.toPoint(wordStartOffset)
+      const end = loc.toPoint(wordEndOffset)
+
+      if (!start || !end){
+        throw new Error("undefined start or end point");
+      }
+
+      const wordPosition: Position = {
+        start: start,
+        end: end,
+      };
+
+      const msg: VFileMessage = file.message(
+        `Incorrect word case. Expected \`${res.expected}\` but found \`${res.actual}\``,
+        wordPosition, // Use the calculated position of the specific word
       );
 
-      msg.expected = [res.expected.trim()];
+      msg.expected = [res.expected];
       msg.actual = res.actual;
-      msg.place = res.place
+      msg.source = "remark-lint-word-case"; // Good practice to name your rule
+      msg.ruleId = "word-case";
     });
   });
 }
