@@ -16,13 +16,20 @@ Let's see if we can correct table cells:
 
 - Blockquote:
 
-> first line
-> foobar
-> FOOBAR
-> regex here
+> first line regex foobar  
+foobar  
+FOOBAR  
+>
+> another paragraph regex here foobar
 
 1. Does it work if I put adjacent punctuation? Like regex, regex? 
-2. testing fooBAR
+2. testing fooBAR  
+   testing regex on two lines ordered list
 3. testing FooBAR
 4. testing foo BAR
-5. testing barFOO
+5. testing barFOO  
+   foobar
+
+```js
+const no_errors("regex, foobar")
+```
