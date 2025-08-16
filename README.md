@@ -1,2 +1,2 @@
 # remark-lint-word-case
-remark plugin to enforce case for specific words
+remark-lint rule to enforce a specific case on a list of user-defined words.
