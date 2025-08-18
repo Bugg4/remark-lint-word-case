@@ -1,9 +1,9 @@
-import remarkLintWordCase from "../src/index.ts";
 import { expect, test } from "bun:test";
-import { remark } from "remark";
 import path from "path";
+import { remark } from "remark";
 import type { VFile } from "vfile";
 import { reporter } from "vfile-reporter";
+import remarkLintWordCase from "../src/index.ts";
 
 const invalidFilePath = path.join(import.meta.dirname, "docs/invalid.md");
 const invalidFileContent = await Bun.file(invalidFilePath).text();

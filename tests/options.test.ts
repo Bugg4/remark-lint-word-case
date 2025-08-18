@@ -1,8 +1,7 @@
-import remarkLintWordCase from "../src/index.ts";
-import { ERRORS } from "../src/index.ts";
 import { expect, test } from "bun:test";
 import { remark } from "remark";
 import { VFile } from "vfile";
+import remarkLintWordCase, { ERRORS } from "../src/index.ts";
 
 test("Catch undefined options", async () => {
   const result: VFile = await remark()
@@ -10,9 +9,7 @@ test("Catch undefined options", async () => {
     .process("## This should fail because of invalid options");
 
   expect(result.messages.length > 0).toBe(true);
-  expect(result.messages[0].reason).toBe(
-    ERRORS.OPTIONS_UNDEFINED,
-  );
+  expect(result.messages[0].reason).toBe(ERRORS.OPTIONS_UNDEFINED);
 });
 
 test("Catch invalid options", async () => {
@@ -23,7 +20,5 @@ test("Catch invalid options", async () => {
     .process("## This should fail because of invalid options");
 
   expect(result.messages.length > 0).toBe(true);
-  expect(result.messages[0].reason).toBe(
-    ERRORS.OPTIONS_INVALID,
-  );
+  expect(result.messages[0].reason).toBe(ERRORS.OPTIONS_INVALID);
 });
