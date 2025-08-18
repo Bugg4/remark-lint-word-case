@@ -2,7 +2,7 @@
   "name": "remark-lint-word-case",
   "repository": "https://github.com/Bugg4/remark-lint-word-case",
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "remark-lint rule to ensure specified words are written in the correct casing.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
