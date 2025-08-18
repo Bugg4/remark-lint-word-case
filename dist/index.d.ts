@@ -1,12 +1,11 @@
 import type { Node } from "unist";
-type NonEmptyArray<T> = [T, ...T[]];
-export type remarkLintWordCaseOptions = {
+import type { NonEmptyArray } from "./utils";
+export type RemarkLintWordCaseOptions = {
     words: NonEmptyArray<string>;
 };
-export declare enum remarkLintWordCaseError {
-    _OPTIONS_PREFIX = "Invalid options:",
-    OPTIONS_UNDEFINED = "Invalid options: options must include `words:` key.",
-    OPTIONS_INVALID = "Invalid options: 'words' must be a non-empty array of strings."
-}
-declare const remarkLintWordCase: import("unified-lint-rule").Plugin<Node, remarkLintWordCaseOptions>;
+export declare const ERRORS: {
+    readonly OPTIONS_UNDEFINED: "Options must include a `words` key.";
+    readonly OPTIONS_INVALID: "`words` must be a non-empty array of unique string values.";
+};
+declare const remarkLintWordCase: import("unified-lint-rule").Plugin<Node, RemarkLintWordCaseOptions>;
 export default remarkLintWordCase;
