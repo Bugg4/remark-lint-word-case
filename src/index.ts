@@ -75,16 +75,16 @@ function wordCaseRule(
   file: VFile,
   options: remarkLintWordCaseOptions,
 ) {
-  // --- Option validation ---
-  if (!options) {
-    throw new Error(ERRORS.OPTIONS_UNDEFINED);
+  // --- Runtime option validation ---
+  if (!options?.words) {
+    file.fail(ERRORS.OPTIONS_UNDEFINED, undefined, SOURCE_ID);
   }
   if (
     !Array.isArray(options.words) ||
     options.words.length === 0 ||
     options.words.some((word) => typeof word !== "string")
   ) {
-    throw new Error(ERRORS.OPTIONS_INVALID);
+    file.fail(ERRORS.OPTIONS_INVALID, undefined, SOURCE_ID);
   }
   // --- End validation ---
 
