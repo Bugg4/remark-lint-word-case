@@ -1,5 +1,5 @@
 import remarkLintWordCase from "../src/index.ts";
-import { remarkLintWordCaseError } from "../src/index.ts";
+import { ERRORS } from "../src/index.ts";
 import { expect, test } from "bun:test";
 import { remark } from "remark";
 import { VFile } from "vfile";
@@ -11,7 +11,7 @@ test("Catch undefined options", async () => {
 
   expect(result.messages.length > 0).toBe(true);
   expect(result.messages[0].reason).toBe(
-    remarkLintWordCaseError.OPTIONS_UNDEFINED,
+    ERRORS.OPTIONS_UNDEFINED,
   );
 });
 
@@ -24,6 +24,6 @@ test("Catch invalid options", async () => {
 
   expect(result.messages.length > 0).toBe(true);
   expect(result.messages[0].reason).toBe(
-    remarkLintWordCaseError.OPTIONS_INVALID,
+    ERRORS.OPTIONS_INVALID,
   );
 });

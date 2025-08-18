@@ -5,17 +5,19 @@ import type { Literal, Node, Position } from "unist";
 import type { VFileMessage } from "vfile-message";
 import { location } from "vfile-location";
 
+const RULE_ID = "word-case";
+const SOURCE_ID = `remark-lint:${RULE_ID}`;
+
+export const ERRORS = {
+  OPTIONS_UNDEFINED: "Options must include a `words` key.",
+  OPTIONS_INVALID: "`words` must be a non-empty array of unique string values.",
+} as const;
+
 type NonEmptyArray<T> = [T, ...T[]];
 
 export type remarkLintWordCaseOptions = {
   words: NonEmptyArray<string>;
 };
-
-export enum remarkLintWordCaseError {
-  _OPTIONS_PREFIX = "Invalid options:",
-  OPTIONS_UNDEFINED = `${remarkLintWordCaseError._OPTIONS_PREFIX} options must include \`words:\` key.`,
-  OPTIONS_INVALID = `${remarkLintWordCaseError._OPTIONS_PREFIX} 'words' must be a non-empty array of strings.`,
-}
 
 interface TextNode extends Literal {
   type: "text";
@@ -75,14 +77,14 @@ function wordCaseRule(
 ) {
   // --- Option validation ---
   if (!options) {
-    throw new Error(remarkLintWordCaseError.OPTIONS_UNDEFINED);
+    throw new Error(ERRORS.OPTIONS_UNDEFINED);
   }
   if (
     !Array.isArray(options.words) ||
     options.words.length === 0 ||
     options.words.some((word) => typeof word !== "string")
   ) {
-    throw new Error(remarkLintWordCaseError.OPTIONS_INVALID);
+    throw new Error(ERRORS.OPTIONS_INVALID);
   }
   // --- End validation ---
 
@@ -129,6 +131,6 @@ function wordCaseRule(
   });
 }
 
-const remarkLintWordCase = lintRule("remark-lint:word-case", wordCaseRule);
+const remarkLintWordCase = lintRule(SOURCE_ID, wordCaseRule);
 
 export default remarkLintWordCase;
