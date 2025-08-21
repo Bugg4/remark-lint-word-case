@@ -2,7 +2,7 @@
   "name": "remark-lint-word-case",
   "repository": "https://github.com/Bugg4/remark-lint-word-case",
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "remark-lint rule to ensure specified words are written in the correct casing.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -47,6 +47,7 @@
     "@types/vfile-message": "^2.0.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0",
     "remark": "^15.0.1",
     "typescript": "^5",
     "vfile-location": "^5.0.3"
@@ -56,7 +57,10 @@
     "trailingComma": "all",
     "printWidth": 80,
     "tabWidth": 2,
-    "semi": true
+    "semi": true,
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ]
   },
   "private": false
 }
